@@ -1,0 +1,26 @@
+name: check .txt files
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for new.txt and update.txt
+        run: |
+          echo "Checking for required .txt files..."
+          if [ -f "new.txt" ] && [ -f "update.txt" ]; then
+            echo "✅ Both files are present!"
+          else
+            echo "❌ One or both required .txt files are missing!"
+            exit 1
+          fi
+
